@@ -127,6 +127,10 @@ func (c *channelPool) Ping(conn interface{}) error {
 	return c.ping(conn)
 }
 
+func (c *channelPool) Close(conn interface{}) {
+	c.close(conn)
+}
+
 func (c *channelPool) Destroy() {
 	c.mu.Lock()
 	conns := c.conns
