@@ -60,6 +60,10 @@ func (p *TPoolClient) Call(ctx context.Context, method string, args, result thri
 	// try old conn
 	for i := 0; i < p.maxRetry; i++ {
 		connVar, err = p.pool.Get()
+		// 闲置时间过长，会自动断开 conVar 为 nil
+		if connVar == nil {
+			continue
+		}
 		if err == nil {
 			err = p.call(connVar, method, args, result)
 		}
